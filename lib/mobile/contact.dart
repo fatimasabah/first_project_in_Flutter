@@ -14,11 +14,11 @@ class contact extends StatefulWidget {
 class _contactState extends State<contact> {
   @override
   Widget build(BuildContext context) {
-    var widthdevice =MediaQuery.of(context).size.width;
+    var widthdevice = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
-       endDrawer: Drawer(
+      endDrawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -33,7 +33,7 @@ class _contactState extends State<contact> {
                   ),
                 ),
                 child: Image.asset(
-                  'assets/images/profile2.png',
+                  'assets/images/profile1.jpg',
                   errorBuilder: (context, error, stackTrace) {
                     return Text("❌ image dont responce");
                   },
@@ -43,15 +43,15 @@ class _contactState extends State<contact> {
             // Tabsmobile(text:"home", route:'/'),
             Tapsmobile(text: 'home', route: '/'),
             SizedBox(height: 20.0),
-            Tapsmobile(text: 'works', route: '/works'),
+            Tapsmobile(text: 'works', route: '/Works'),
             SizedBox(height: 20.0),
             Tapsmobile(text: 'blog', route: '/Blog'),
             SizedBox(height: 20.0),
             Tapsmobile(text: 'aboutus', route: '/About'),
-            SizedBox(height: 20.0,),
+            SizedBox(height: 20.0),
             Tapsmobile(text: 'contact', route: '/contact'),
             SizedBox(height: 20.0),
-           
+
             SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -88,50 +88,62 @@ class _contactState extends State<contact> {
           ],
         ),
       ),
-       body: NestedScrollView(
-        headerSliverBuilder:(BuildContext context , bool innerBoxIsScrolled){
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.white,
-              iconTheme: IconThemeData(
-                size: 35.0,
-                color:Colors.black,
-              ),
+              iconTheme: IconThemeData(size: 35.0, color: Colors.black),
               flexibleSpace: FlexibleSpaceBar(
                 // put in this part background
               ),
-            )
+            ),
           ];
-        } ,
-         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 25.0 ),
+        },
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(vertical: 25.0),
           child: Wrap(
             runSpacing: 20.0,
             spacing: 20.0,
             alignment: WrapAlignment.center,
             children: [
               SansBold("Contact me", 35.0),
-              textForm(text: "first name", containerwidth: widthdevice/1.4, hinttext: "pleas type firstname"),
-              textForm(text: "last name", containerwidth: widthdevice/1.4, hinttext: "pleas type last name"),
-              textForm(text: "phone number", containerwidth: widthdevice/1.4, hinttext: "phone number"),
-              textForm(text: "message", containerwidth: widthdevice/1.4, hinttext: "your message", maxlines:10),
-            MaterialButton(onPressed: (){},
-             elevation: 20.0,
-             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-             ),
-             height: 60.0,
-             minWidth: widthdevice/2.2,
-             color: Colors.tealAccent,
-             child: SansBold("submit", 20.0),
-            ),
-            
-
+              textForm(
+                text: "first name",
+                containerwidth: widthdevice / 1.4,
+                hinttext: "pleas type firstname",
+              ),
+              textForm(
+                text: "last name",
+                containerwidth: widthdevice / 1.4,
+                hinttext: "pleas type last name",
+              ),
+              textForm(
+                text: "phone number",
+                containerwidth: widthdevice / 1.4,
+                hinttext: "phone number",
+              ),
+              textForm(
+                text: "message",
+                containerwidth: widthdevice / 1.4,
+                hinttext: "your message",
+                maxlines: 10,
+              ),
+              MaterialButton(
+                onPressed: () {},
+                elevation: 20.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 60.0,
+                minWidth: widthdevice / 2.2,
+                color: Colors.tealAccent,
+                child: SansBold("submit", 20.0),
+              ),
             ],
           ),
-         ),
-       ),
-        
+        ),
+      ),
     );
   }
 }

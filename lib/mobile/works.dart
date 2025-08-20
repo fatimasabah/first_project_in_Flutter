@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'component.dart';
+import 'package:my_first_app/mobile/component.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Blog extends StatefulWidget {
-  const Blog({super.key});
+class Works extends StatefulWidget {
+  const Works({super.key});
 
   @override
-  State<Blog> createState() => _BlogState();
+  State<Works> createState() => _WorksState();
 }
 
-class _BlogState extends State<Blog> {
+class _WorksState extends State<Works> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.white,
         endDrawer: Drawer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,6 +50,8 @@ class _BlogState extends State<Blog> {
               Tapsmobile(text: 'aboutus', route: '/About'),
               SizedBox(height: 20.0),
               Tapsmobile(text: 'contact', route: '/contact'),
+              SizedBox(height: 20.0),
+
               SizedBox(height: 20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -88,103 +92,31 @@ class _BlogState extends State<Blog> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
+                expandedHeight: 400.0,
                 backgroundColor: Colors.white,
                 iconTheme: IconThemeData(size: 35.0, color: Colors.black),
                 flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(3.0),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
-                    child: AbelCustom(
-                      text: "welcom to my Blog",
-                      size: 24.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  // put in this part background
                   background: Image.asset(
                     "assets/images/profile1.jpg",
-                    filterQuality: FilterQuality.high,
                     fit: BoxFit.cover,
-                  ),
+                    )
+                    ),
                 ),
-                expandedHeight: 400.0,
-              ),
+              
             ];
           },
-          body: ListView(children: [BlogPost(), BlogPost(), BlogPost()]),
-        ),
-      ),
-    );
-  }
-}
-
-// -----------------------------------------------
-
-class BlogPost extends StatefulWidget {
-  const BlogPost({super.key});
-
-  @override
-  State<BlogPost> createState() => _BlogPostState();
-}
-
-class _BlogPostState extends State<BlogPost> {
-  bool expend = false;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
-      child: Container(
-        padding: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-            style: BorderStyle.solid,
-            width: 1.0,
-            color: Colors.black,
+          body: ListView(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 20.0,),
+                  SansBold("works", 35.0)
+                ],
+              )
+            ],
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(3.0),
-                  ),
-                  child: AbelCustom(
-                    text: "who is Dash",
-                    size: 25.0,
-                    color: Colors.white,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      expend = !expend;
-                    });
-                  },
-                  icon: Icon(Icons.arrow_drop_down_circle_outlined),
-                  color: Colors.black,
-                ),
-              ],
-            ),
-            SizedBox(height: 7.0),
-            Text(
-              "For more information on sharing state between widgets, check out the following resources: Using widget constructor Since Dart objects are passed by reference, its very common for widgets to define the objects they need to use in their constructor. Any state you pass into a widgets constructor can be used to build its UI:",
-              style: GoogleFonts.openSans(fontSize: 15.0),
-              maxLines: expend == true ? null : 3,
-              overflow: expend == true
-                  ? TextOverflow.visible
-                  : TextOverflow.ellipsis,
-            ),
-          ],
         ),
       ),
     );
