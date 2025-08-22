@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'component.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Blog extends StatefulWidget {
   const Blog({super.key});
@@ -12,7 +14,33 @@ class Blog extends StatefulWidget {
 }
 
 class _BlogState extends State<Blog> {
+  // List title=['whos dash 1','whos dash 2'];
+  // List body =['well ,we are can read in google','Google it'];
+  void article() async {
+    await FirebaseFirestore.instance.collection("articles").get().then((
+      querySnapshot,
+    ) {
+      querySnapshot.docs.reversed.forEach((element) {
+        print(element.data()['title']);
+      });
+    });
+  }
+
+  void streamarticle() async {
+    await for (var snapshot
+        in FirebaseFirestore.instance.collection("articles").snapshots()) {
+      for (var title in snapshot.docs.reversed) {
+        print(title.data()['title']);
+      }
+    }
+  }
+
   @override
+  // void initState() {
+  //   streamarticle();
+  //   // article();
+  //   super.initState();
+  // }
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -115,7 +143,27 @@ class _BlogState extends State<Blog> {
               ),
             ];
           },
-          body: ListView(children: [BlogPost(), BlogPost(), BlogPost()]),
+          body: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('articles')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    DocumentSnapshot documentSnapshot =
+                        snapshot.data!.docs[index];
+                    return BlogPost(
+                      title: documentSnapshot["title"],
+                      body: documentSnapshot['body'],
+                    );
+                  },
+                );
+              } else
+                return Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
       ),
     );
@@ -125,7 +173,10 @@ class _BlogState extends State<Blog> {
 // -----------------------------------------------
 
 class BlogPost extends StatefulWidget {
-  const BlogPost({super.key});
+  final title;
+  final body;
+  const BlogPost({Key? key, @required this.title, @required this.body})
+    : super(key: key);
 
   @override
   State<BlogPost> createState() => _BlogPostState();
@@ -159,7 +210,7 @@ class _BlogPostState extends State<BlogPost> {
                     borderRadius: BorderRadius.circular(3.0),
                   ),
                   child: AbelCustom(
-                    text: "who is Dash",
+                    text: widget.title,
                     size: 25.0,
                     color: Colors.white,
                   ),
@@ -177,7 +228,7 @@ class _BlogPostState extends State<BlogPost> {
             ),
             SizedBox(height: 7.0),
             Text(
-              "For more information on sharing state between widgets, check out the following resources: Using widget constructor Since Dart objects are passed by reference, its very common for widgets to define the objects they need to use in their constructor. Any state you pass into a widgets constructor can be used to build its UI:",
+              widget.body,
               style: GoogleFonts.openSans(fontSize: 15.0),
               maxLines: expend == true ? null : 3,
               overflow: expend == true
