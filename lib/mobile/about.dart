@@ -41,74 +41,7 @@ class _AboutState extends State<About> {
           elevation: 0.0,
           iconTheme: IconThemeData(size: 35.0, color: Colors.black),
         ),
-        endDrawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 0.2,
-                      color: const Color.fromRGBO(0, 0, 0, 1),
-                    ),
-                  ),
-                  child: Image.asset(
-                    'assets/images/profile1.jpg',
-                    errorBuilder: (context, error, stackTrace) {
-                      return Text("❌ image dont responce");
-                    },
-                  ),
-                ),
-              ),
-              // Tabsmobile(text:"home", route:'/'),
-              Tapsmobile(text: 'home', route: '/'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'works', route: '/Works'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'blog', route: '/Blog'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'aboutus', route: '/About'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'contact', route: '/contact'),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/instagram.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/github.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/linkedin.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        endDrawer: DrawerM(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: ListView(

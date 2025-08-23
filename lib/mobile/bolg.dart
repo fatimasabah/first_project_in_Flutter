@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
 import 'component.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,97 +28,32 @@ class _BlogState extends State<Blog> {
   }
 
   void streamarticle() async {
+   var logger =Logger();
+
     await for (var snapshot
         in FirebaseFirestore.instance.collection("articles").snapshots()) {
       for (var title in snapshot.docs.reversed) {
-        print(title.data()['title']);
+        logger.d(title.data()['title']);
       }
     }
   }
 
   @override
-  // void initState() {
-  //   streamarticle();
-  //   // article();
-  //   super.initState();
-  // }
+  void initState() {
+    streamarticle();
+    // article();
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        endDrawer: Drawer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DrawerHeader(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 0.2,
-                      color: const Color.fromRGBO(0, 0, 0, 1),
-                    ),
-                  ),
-                  child: Image.asset(
-                    'assets/images/profile1.jpg',
-                    errorBuilder: (context, error, stackTrace) {
-                      return Text("❌ image dont responce");
-                    },
-                  ),
-                ),
-              ),
-              // Tabsmobile(text:"home", route:'/'),
-              Tapsmobile(text: 'home', route: '/'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'works', route: '/Works'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'blog', route: '/Blog'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'aboutus', route: '/About'),
-              SizedBox(height: 20.0),
-              Tapsmobile(text: 'contact', route: '/contact'),
-              SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/instagram.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/github.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async =>
-                        await launch("https://www.instagram.com/fatimasabah"),
-                    icon: SvgPicture.asset(
-                      "assets/images/linkedin.svg",
-                      color: Colors.black,
-                      width: 35.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        endDrawer:DrawerM(),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
                 backgroundColor: Colors.white,
-                iconTheme: IconThemeData(size: 35.0, color: Colors.black),
+                iconTheme:const IconThemeData(size: 35.0, color: Colors.black),
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   title: Container(
@@ -125,8 +61,8 @@ class _BlogState extends State<Blog> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(3.0),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 4.0),
-                    child: AbelCustom(
+                    padding:const EdgeInsets.symmetric(horizontal: 4.0),
+                    child:const AbelCustom(
                       text: "welcom to my Blog",
                       size: 24.0,
                       color: Colors.white,
@@ -160,8 +96,9 @@ class _BlogState extends State<Blog> {
                     );
                   },
                 );
-              } else
-                return Center(child: CircularProgressIndicator());
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
             },
           ),
         ),
